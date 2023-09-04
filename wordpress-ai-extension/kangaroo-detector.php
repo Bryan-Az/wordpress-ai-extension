@@ -23,11 +23,11 @@ add_action('wp_enqueue_scripts', 'kangaroo_detector_scripts');
 function kangaroo_detector_shortcode() {
     ob_start();
     ?>
+    <div id="kangaroo-score-container"></div>
     <form name="kangaroo-upload-form" method="post" enctype="multipart/form-data">
         <input type="file" name="image" required>
         <input type="submit" value="Upload Image">
-    </form>
-    <div id="kangaroo-score-container"></div>
+    </form
     <?php
     return ob_get_clean();
 }
@@ -44,7 +44,12 @@ function kangaroo_detector_proxy_endpoint() {
             'headers' => array('Content-Type' => 'application/json')
         ));
 
+        // Log the complete response for examination
+        error_log(print_r($response['body'], true));
+
         if (is_wp_error($response)) {
+            // Log the exact error details for further inspection
+            error_log($response->get_error_message());
             echo 'Failed to get a response from the model.';
             wp_die();
         }
