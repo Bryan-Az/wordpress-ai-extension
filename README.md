@@ -1,4 +1,4 @@
-The goal for this project is to deploy a machine learning model that is hosted on a live wordpress website, by cloning this repo onto a server - only minor modifications to the server's pre-existing docker-compose file will need to be made.
+The goal for this project is to deploy a machine learning model that is hosted on a live wordpress website, by launching a docker-compose stack.
 
 The overview of the model is available to view on medium, here: https://medium.com/@bryanambzam/a-detection-algorithm-using-scikit-learn-chat-gpt-4-to-identify-images-of-kangaroos-8d3aae90dcb6
 
