@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import pickle
 from PIL import Image
 import numpy as np
+import io
+import base64
 
 app = Flask(__name__)
 
@@ -13,10 +15,14 @@ with open('kangaroo_classifier_model.pkl', 'rb') as f:
 def predict():
     try:
         # Ensure image is part of the request
-        if 'image' not in request.files:
-            return jsonify({"error": "No image data received."}), 400
-
-        image = request.files['image']
+        if not request.json or 'image' not in request.json:
+            return jsonify({'error': 'No image data received.'}), 400
+    
+        # Decode the Base64 encoded image
+        image_data = base64.b64decode(request.json['image'])
+        
+        # Convert the decoded image data to an Image object
+        image = Image.open(io.BytesIO(image_data))
         img = Image.open(image).convert('RGB')
         img = img.resize((224, 224))
         img_array = np.array(img)

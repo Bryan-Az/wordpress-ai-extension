@@ -1,5 +1,5 @@
-# Build the Docker images
-docker-compose build
+# Install dependencies
+pip install -r requirements.txt
 
-# Start the services
-docker-compose up
+# Build and run Docker containers
+docker-compose up --build -d

@@ -1,39 +1,46 @@
 version: '3'
 services:
-  db:
-    image: mysql:8
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: exampledb
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    volumes:
+      - ./wordpress-ai-extension:/var/www/html/wp-content/plugins/kangaroo-detector
+    depends_on:
+      - exampledb
+      - flask-app
+    networks:
+      - my-network
+
+  exampledb:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_ROOT_PASSWORD: examplepass
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+    networks:
+      - my-network
 
-  wordpress:
-    depends_on:
-      - db
-    image: wordpress:latest
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./wordpress:/var/www/html
-    ports:
-      - "8000:80"
-    restart: always
-    environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
-
-  wordpress_ai_extension:
-    build: .
-    volumes:
-      - .:/app
-    depends_on:
-      - db
-    ports:
-      - "5000:5000"
+      - ./wordpress-ai-extension:/app
+    networks:
+      - my-network
 
 volumes:
-    db_data: {}
+  db_data:
+
+networks:
+  my-network:
+    driver: bridge

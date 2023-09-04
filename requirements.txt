@@ -1,5 +1,6 @@
-flask
-pymysql
+Flask>=2.2.2
+joblib==1.0.1
+numpy==1.20.2
+Pillow==8.2.0
+requests==2.25.1
 scikit-learn
-numpy
-pillow
