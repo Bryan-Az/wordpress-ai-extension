@@ -1,6 +1,6 @@
 The goal for this project is to deploy a machine learning model that is hosted on a live wordpress website, by launching a docker-compose stack.
 
-To use this app plugin, you need to run the docker-compose script in the main outer folder, and then once the wordpress site is available on localhost in your browser, you can then install the wordpress and after you're in the admin dashboard, head to the plugin section & activate the kangaroo detector plugin. Once it's activated you can create a post or use any available post to add a short-code block on your page with the code: [kangaroo_detector]
+To use this app plugin, you need to run the bash.sh script in the main outer folder by running bash run.sh, and then once the wordpress site is available on localhost in your browser, you can then install the wordpress and after you're in the admin dashboard, head to the plugin section & activate the kangaroo detector plugin. Once it's activated you can create a post or use any available post to add a short-code block on your page with the code: [kangaroo_detector]
 
 Once you publish & save, the post/page will now be able to present a form with an upload link. You can upload a png or jpg image. The plugin will communicate with the flask python app.py and then return a score as a response back to the javascript and edit the html to present the score! 
 
